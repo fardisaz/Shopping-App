@@ -1,0 +1,30 @@
+TableColumn select = new TableColumn("CheckBox");
+        select.setMinWidth(200);
+        select.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Person, CheckBox>, ObservableValue<CheckBox>>() {
+
+            @Override
+            public ObservableValue<CheckBox> call(
+                    TableColumn.CellDataFeatures<Person, CheckBox> arg0) {
+                Person user = arg0.getValue();
+
+                CheckBox checkBox = new CheckBox();
+
+                checkBox.selectedProperty().setValue(user.isSelected());
+
+
+
+                checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                    public void changed(ObservableValue<? extends Boolean> ov,
+                            Boolean old_val, Boolean new_val) {
+
+                        user.setSelected(new_val);
+
+                    }
+                });
+
+                return new SimpleObjectProperty<CheckBox>(checkBox);
+
+            }
+
+        });
+        table.getColumns().addAll( select);
